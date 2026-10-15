@@ -1,0 +1,24 @@
+<!doctype html><html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rifa Fabrício Bar</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#090909;color:#fff;font-family:Arial,sans-serif}.wrap{max-width:720px;margin:auto;padding:12px}
+header{background:linear-gradient(135deg,#181818,#300);border:2px solid #d71920;border-radius:18px;padding:18px;text-align:center}h1{margin:0;color:#ffd400;font-size:clamp(28px,8vw,52px);font-weight:900}.sub{font-weight:800;margin-top:6px}
+.hero{margin-top:12px;background:#171717;border-radius:18px;padding:16px;border:1px solid #333}.prize{text-align:center;color:#ffd400;font-size:23px;font-weight:900}.info{text-align:center;margin:8px 0;font-weight:700}.price{text-align:center;font-size:25px;font-weight:900;margin:16px 0;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.num{border:0;border-radius:10px;padding:13px 3px;background:#2b2b2b;color:#fff;font-size:18px;font-weight:900;cursor:pointer}.num.selected{background:#ffd400;color:#111}.num.sold{background:#555;color:#aaa;cursor:not-allowed;text-decoration:line-through}
+.legend{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:15px 0;font-size:13px}.dot{display:inline-block;width:13px;height:13px;border-radius:50%;vertical-align:-2px;margin-right:5px}.a{background:#2b2b2b}.s{background:#ffd400}.v{background:#555}
+label{display:block;font-weight:800;margin:12px 0 6px}.field{width:100%;padding:14px;border-radius:10px;border:1px solid #444;background:#111;color:#fff;font-size:16px}.summary{background:#0d0d0d;border:1px solid #444;border-radius:12px;padding:14px;margin-top:15px}.total{font-size:24px;font-weight:900;color:#ffd400}
+button.main{width:100%;padding:16px;margin-top:15px;border:0;border-radius:12px;background:#d71920;color:#fff;font-size:18px;font-weight:900;cursor:pointer}.note{font-size:12px;color:#bbb;text-align:center;margin-top:10px;line-height:1.4}
+</style></head><body><div class="wrap"><header><h1>RIFA FABRÍCIO BAR</h1><div class="sub">GELADA É SEMPRE MELHOR! 🍺</div></header>
+<section class="hero"><div class="prize">🏆 PRÊMIO: 5 CX DE BRAHMA LITRINHO</div><div class="info">Sorteio aos domingos a partir das 11:00 • Loteria Federal</div>
+<div class="price">R$ 15,00 por dezena</div><div class="legend"><span><i class="dot a"></i>Disponível</span><span><i class="dot s"></i>Selecionada</span><span><i class="dot v"></i>Vendida</span></div>
+<div id="grid" class="grid"></div><div class="summary">Dezenas escolhidas: <strong id="chosen">nenhuma</strong><br><br>Total: <span class="total" id="total">R$ 0,00</span></div>
+<label>Seu nome</label><input id="name" class="field" placeholder="Digite seu nome"><label>WhatsApp</label><input id="phone" class="field" inputmode="tel" placeholder="(00) 00000-0000">
+<button class="main" id="reserve">RESERVAR E PAGAR NO PIX</button><div class="note">O pagamento automático do Asaas será ligado no servidor na próxima etapa.</div></section></div>
+<script>
+const PRICE=15,selected=new Set(),sold=new Set(),grid=document.getElementById("grid");
+function money(v){return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+function render(){grid.innerHTML="";for(let i=0;i<100;i++){let n=String(i).padStart(2,"0"),b=document.createElement("button");b.className="num"+(selected.has(n)?" selected":"")+(sold.has(n)?" sold":"");b.textContent=n;b.disabled=sold.has(n);b.onclick=()=>{selected.has(n)?selected.delete(n):selected.add(n);render();update()};grid.appendChild(b)}}
+function update(){let x=[...selected].sort();document.getElementById("chosen").textContent=x.length?x.join(", "):"nenhuma";document.getElementById("total").textContent=money(x.length*PRICE)}
+document.getElementById("reserve").onclick=()=>{if(!selected.size)return alert("Escolha pelo menos uma dezena.");if(!document.getElementById("name").value.trim())return alert("Digite seu nome.");if(!document.getElementById("phone").value.trim())return alert("Digite seu WhatsApp.");alert("Página pronta. O Asaas será ligado no servidor.");};render();update();
+</script></body></html>
